@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer'
 import User from '@/models/userModel'
 import bcryptjs from 'bcryptjs'
-import { env } from 'process'
 
 
 export const sendEmail = async ({email, emailType, userId} :any) => {
@@ -33,7 +32,7 @@ export const sendEmail = async ({email, emailType, userId} :any) => {
             html: `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
             or copy and paste the link below in your browser
             <br>
-            ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
+            ${emailType === "VERIFY" ? `${process.env.DOMAIN}/verifyemail?token=${hashedToken}` : `${process.env.DOMAIN}/passwordreset?token=${hashedToken}`}
             </p>`
         }
 

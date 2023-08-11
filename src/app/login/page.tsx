@@ -39,7 +39,7 @@ export default function LoginPage() {
         }
     }, [user])
     
-
+    
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
             <h1 className="mb-4 text-3xl">{loading ? "Processing" : "Login"}</h1>
@@ -62,6 +62,8 @@ export default function LoginPage() {
             />
             <button onClick={onLogin} className="bg-white text-black font-medium py-2 px-4 border-gray-300 rounded-lg">{buttonDisabled ? "No Login" : "Login"}</button>
             <Link className="p-4" href='/signup'>Visit Signup Page</Link>
+            <hr />
+            <Link className="p-4" href='/forgotpassword'>Forgot Password</Link>
         </div>
     )
 }

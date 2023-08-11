@@ -4,7 +4,7 @@ import { NextRequest } from 'next/server'
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
-  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail'
+  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail' || path === '/forgotpassword'
   const token = request.cookies.get('token')?.value || ''
   
   if(isPublicPath && token) {
@@ -23,5 +23,7 @@ export const config = {
     '/login',
     '/signup',
     '/verifyemail',
+    '/forgotpassword',
+    '/resetpassword'
   ]
 }
