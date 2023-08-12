@@ -18,14 +18,12 @@ export default function LoginPage() {
     const onLogin = async () => {
         try {
             setLoading(true)
-            const response = await axios.post("/api/users/login", user)
-            console.log("Login Successfull", response.data)
+            await axios.post("/api/users/login", user)
             toast.success("Login Successfull")
             router.push("/profile")
             
         } catch (error: any) {
-           console.log("Login Failed", error.message)
-           toast.error(error.message)
+           toast.error("email or password are wrong", error.message)
         }finally{
             setLoading(false)
         }

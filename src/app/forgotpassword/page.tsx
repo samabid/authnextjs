@@ -1,23 +1,19 @@
 'use client'
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import axios from "axios"
+import { toast } from "react-hot-toast"
 
 export default function ForgotPasswordPage() {
-    const router = useRouter()
     const [email, setEmail] = useState("")
-    const [message, setMessage] = useState("")
 
     const verifyEmail = async () => {
         try {
             await axios.post('/api/users/forgotpassword', {email})
-            console.log("User Found")
-            //router.push("/resetpassword")
-            setMessage("User Found Please check your inbox and click on verifiaction link")
+            toast.success("User Found!")
+            toast("Please check your inbox and click on verification link.", {duration: 10000})
         } catch (error: any) {
-            console.log("User Not Found", error.message)
-            setMessage("User Not Found, Please try again")
+            toast.error("Something went wrong try again", error.message)    
         }
     }
 
@@ -32,8 +28,6 @@ export default function ForgotPasswordPage() {
             onChange={(e) => setEmail(e.target.value)}
             />
             <button onClick={verifyEmail} className="bg-white text-black font-medium py-2 px-4 border-gray-300 rounded-lg">Submit</button>
-            <br />
-            <h1>{message}</h1>
         </div>
     )
 }

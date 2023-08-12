@@ -19,11 +19,11 @@ export default function SignupPage() {
     const onSignup = async () => {
         try {
             setLoading(true)
-            const response = await axios.post("/api/users/signup", user)
-            console.log("Signup successfull", response.data)
+            await axios.post("/api/users/signup", user)
+            toast.success("Signup successfull")
+            toast("Please check your inbox and click on verification link.", {duration: 10000})
             router.push("/login")
         } catch (error: any) {
-            console.log("Signup error", error.message)
             toast.error(error.message)
         }finally{
             setLoading(false)

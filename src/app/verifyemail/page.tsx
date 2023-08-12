@@ -2,6 +2,7 @@
 import axios from "axios"
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import { toast } from "react-hot-toast"
 
 
 export default function VerifyEmailPage() {
@@ -13,9 +14,10 @@ export default function VerifyEmailPage() {
         try {
             await axios.post('/api/users/verifyemail', {token})
             setVerified(true)
+            toast.success("Your account has been verified")
         } catch (error: any) {
             setError(true)
-            console.log(error.response.data.message)
+            toast.error(error.message)
         }
     }
 
@@ -37,7 +39,6 @@ export default function VerifyEmailPage() {
 
             {verified && (
                 <div>
-                    <h2 className="text-2xl">Email Verified</h2>
                     <Link href={"/login"}>Login</Link>
                 </div>
             )}
