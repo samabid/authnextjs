@@ -4,6 +4,18 @@ import React, {useEffect, useState} from "react"
 import { useRouter } from "next/navigation"
 import axios  from "axios"
 import toast from "react-hot-toast"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Loader2 } from "lucide-react"
 
 
 export default function LoginPage() {
@@ -12,7 +24,6 @@ export default function LoginPage() {
         email: "",
         password: "",
     })
-    const [buttonDisabled, setButtonDisabled] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const onLogin = async () => {
@@ -23,45 +34,52 @@ export default function LoginPage() {
             router.push("/profile")
             
         } catch (error: any) {
-           toast.error("email or password are wrong", error.message)
+            toast.error("Email or Password is incorrect", error.message)
         }finally{
             setLoading(false)
         }
     }
-
-    useEffect(() => {
-        if(user.email.length >0 && user.password.length >0){
-            setButtonDisabled(false)
-        }else{
-            setButtonDisabled(true)
-        }
-    }, [user])
     
     
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="mb-4 text-3xl">{loading ? "Processing" : "Login"}</h1>
-            <hr />
-            <label htmlFor="email">Email</label>
-            <input className="p-1.5 border-gray-300 rounded-lg mb-4 focus:outline-none focus-border-gray-300 text-black"
-                type="email" 
-                id="email" 
-                value={user.email}
-                onChange={(e) => setUser({...user, email:e.target.value})}
-                placeholder="email"
-            />
-            <label htmlFor="password">Password</label>
-            <input className="p-1.5 border-gray-300 rounded-lg mb-4 focus:outline-none focus-border-gray-300 text-black"
-                type="password" 
-                id="password" 
-                value={user.password}
-                onChange={(e) => setUser({...user, password:e.target.value})}
-                placeholder="password"
-            />
-            <button onClick={onLogin} className="bg-white text-black font-medium py-2 px-4 border-gray-300 rounded-lg">{buttonDisabled ? "No Login" : "Login"}</button>
-            <Link className="p-4" href='/signup'>Visit Signup Page</Link>
-            <hr />
-            <Link className="p-4" href='/forgotpassword'>Forgot Password</Link>
+        <div className="min-h-screen flex flex-wrap flex-col items-center justify-center">
+           <Card className="w-[300px] sm:w-[350px]">
+             <CardHeader className="space-y-1">
+                <CardTitle className="text-2xl">Login</CardTitle>
+                <CardDescription>
+                Enter your email and password to login
+                </CardDescription>
+            </CardHeader>
+              <CardContent className="grid gap-4">
+                <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                    <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="m@example.com"
+                        value={user.email}
+                        onChange={(e) => setUser({...user, email:e.target.value})}
+                    />
+                <Link className="text-right text-xs text-slate-500 hover:underline hover:text-slate-300" href='/forgotpassword'>Forgot Password</Link>
+                </div>
+                <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                    <Input 
+                        id="password" 
+                        type="password"
+                        value={user.password}
+                        onChange={(e) => setUser({...user, password:e.target.value})}
+                    />
+                </div>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+                <Button disabled={user.email.length >0 && user.password.length >0 ? false : true} onClick={onLogin}>
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Login"}
+                </Button>
+                <Button variant='outline'><Link href='/signup'>Signup</Link></Button>
+            </CardFooter>
+         </Card>
         </div>
+        
     )
 }
