@@ -4,11 +4,22 @@ import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+
 
 export default function ProfilePage() {
 
     const router = useRouter()
     const [data, setData] = useState("nothing")
+    
     const logout = async () => {
         try {
            await axios.get('/api/users/logout')
@@ -26,12 +37,20 @@ export default function ProfilePage() {
 
     return (
         <div className="flex justify-center items-center flex-col h-screen py-2">
-            <h1>Profile</h1>
-            <hr />
-            <h2 className="p-1 rounded bg-green-500">{data === "nothing" ? "Nothing" : <Link href={`/profile/${data}`}>{data}</Link>}</h2>
-            <hr />
-            <button onClick={logout} className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Logout</button>
-            <button onClick={getUserDetails} className="bg-green-900 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Get User Details</button>
+            <Card className="w-[300px] sm:w-[350px]">
+             <CardHeader className="space-y-1">
+                <CardTitle className="text-2xl">User Details</CardTitle>
+                <CardDescription>
+                {data === "nothing" ? "Nothing" : <Link href={`/profile/${data}`}>{data}</Link>}
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+            <div className="grid gap-2">
+                <Button onClick={getUserDetails}>Get User Detailes</Button>
+                <Button variant='outline' onClick={logout}>Logout</Button>
+            </div>
+            </CardContent>
+            </Card>
         </div>
             
     )

@@ -3,9 +3,14 @@ import axios from "axios"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { toast } from "react-hot-toast"
+import {Button} from '@/components/ui/button'
+import { useRouter } from "next/navigation"
 
 
 export default function VerifyEmailPage() {
+
+    const router = useRouter()
+
     const [token, setToken] = useState("")
     const [verified, setVerified] = useState(false)
     const [error, setError] = useState(false)
@@ -32,14 +37,20 @@ export default function VerifyEmailPage() {
         }
     }, [token])
 
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="text-4xl">Verify Email</h1>
-            <h2 className="p-2 bg-orange-500 text-black">{token ? `${token}` : "no token"}</h2>
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          router.push("/login")
+        }, 5000);
+        return () => clearTimeout(timer);
+      }, []);
 
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen py-4">
+            <h1 className="text-4xl">Email Verification</h1>
+            <h2 className="p-2 bg-orange-500 text-black">{token ? `${token}` : "no token"}</h2>
             {verified && (
                 <div>
-                    <Link href={"/login"}>Login</Link>
+                    <Link className="py-2" href={"/login"}><Button variant='outline'>Login</Button></Link>
                 </div>
             )}
             {error && (
