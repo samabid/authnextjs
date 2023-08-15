@@ -76,7 +76,7 @@ export default function LoginPage() {
                 <Button disabled={user.email.length >0 && user.password.length >0 ? false : true} onClick={onLogin}>
                     {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Login"}
                 </Button>
-                <Button variant='outline'><Link href='/signup'>Signup</Link></Button>
+                <Link href='/signup'><Button variant='outline'>Signup</Button></Link>
             </CardFooter>
          </Card>
         </div>

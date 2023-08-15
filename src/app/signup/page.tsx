@@ -88,7 +88,7 @@ export default function SignupPage() {
                         <Button className="w-full" disabled={user.username.length>0 && user.email.length >0 && user.password.length >0 ? false : true} onClick={onSignup}>
                             {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Signup"}
                         </Button>
-                        <Button className="w-full" variant='outline'><Link href='/login'>Visit Login Page</Link></Button>
+                        <Link className="w-full" href='/login'><Button className="w-full" variant='outline'>Visit Login Page</Button></Link>
                     </CardFooter>
                 </Card>
                 </div>
